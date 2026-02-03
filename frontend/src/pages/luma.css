@@ -1,0 +1,61 @@
+.luma-container {
+  background: #0f3d2e;
+  min-height: 100vh;
+  padding: 30px;
+  color: white;
+}
+
+.chat-box {
+  margin: 20px 0;
+  background: #134e3a;
+  padding: 15px;
+  border-radius: 10px;
+  height: 350px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.user {
+  background: #1abc9c;
+  margin: 13px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  display: inline-block;
+  max-width: 70%;
+  align-self: flex-end;
+  text-align: left;
+}
+
+.bot {
+  background: #2ecc71;
+  margin: 5px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  display: inline-block;
+  max-width: 70%;
+  align-self: flex-start;
+}
+
+.chat-input {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.chat-input button {
+  padding: 10px 20px;
+  background: #27ae60;
+  color: white;
+  border-radius: 8px;
+}
+
+.back {
+  margin-top: 10px;
+  cursor: pointer;
+}

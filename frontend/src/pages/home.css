@@ -1,0 +1,48 @@
+.home-container {
+  min-height: 100vh;
+  background-color: #0f4d2f;
+  padding: 30px;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.home-header h2 {
+  margin-bottom: 5px;
+}
+
+.home-header p {
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.home-main-card {
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.home-card {
+  background: white;
+  color: black;
+  padding: 15px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.home-card:hover {
+  transform: scale(1.03);
+}
+
+.home-card span {
+  color: green;
+  font-weight: bold;
+}

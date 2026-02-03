@@ -1,0 +1,46 @@
+.affirmation-page {
+  height: 100vh;
+  background-image: url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.affirmation-card {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  border-radius: 15px;
+  width: 400px;
+  text-align: center;
+  color: white;
+}
+
+.affirmation-card h2 {
+  margin-bottom: 15px;
+}
+
+.affirmation-card p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.affirmation-card button {
+  background: #2ecc71;
+  border: none;
+  padding: 10px 30px;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-inline: 10px;
+  margin-top : 10px;
+  font-size: 18px;
+}
+
+.back {
+  display: block;
+  margin-top: 15px;
+  cursor: pointer;
+  color: #ccc;
+}
