@@ -21,7 +21,7 @@ function Mood() {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        "http://localhost:3000/api/moods",
+        "https://safeheal-backend.onrender.com/api/moods",
         { mood },
         {
           headers: { Authorization: `Bearer ${token}` },

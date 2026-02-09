@@ -12,7 +12,7 @@ function AddAffirmation() {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        "http://localhost:3000/api/affirmations",
+        "https://safeheal-backend.onrender.com/api/affirmations",
         { text },
         {
           headers: {

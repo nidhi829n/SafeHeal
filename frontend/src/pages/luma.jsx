@@ -18,7 +18,7 @@ function Luma() {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/ai/chat",
+        "https://safeheal-backend.onrender.com/api/ai/chat",
         { message: input },
         {
           headers: {

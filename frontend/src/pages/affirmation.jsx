@@ -12,7 +12,7 @@ function Affirmation() {
       const token = localStorage.getItem("token");
 
       const res = await axios.get(
-        "http://localhost:3000/api/affirmations/random",
+        "https://safeheal-backend.onrender.com/api/affirmations/random",
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -20,7 +20,7 @@ function MoodCalendar() {
   useEffect(() => {
     const fetchMoods = async () => {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:3000/api/moods", {
+      const res = await axios.get("https://safeheal-backend.onrender.com/api/moods", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setMoods(res.data);
