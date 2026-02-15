@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./affirmation.css";
+import toast from "react-hot-toast";
 
 function Affirmation() {
   const [affirmation, setAffirmation] = useState("");
@@ -23,7 +24,7 @@ function Affirmation() {
       setAffirmation(res.data.text);
     } catch (error) {
       console.log(error);
-      alert("Error fetching affirmation");
+      toast.error("Error fetching affirmation");
     }
   };
 

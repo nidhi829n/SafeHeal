@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./luma.css";
+import toast from "react-hot-toast";
 
 function Luma() {
   const [input, setInput] = useState("");
@@ -32,7 +33,7 @@ function Luma() {
       setInput("");
     } catch (err) {
       console.log(err);
-      alert("Luma is not responding 😢");
+      toast.error("Luma is having trouble responding");
     }
   };
 

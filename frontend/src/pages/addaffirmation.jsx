@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./affirmation.css";
+import toast from "react-hot-toast";
 
 function AddAffirmation() {
   const [text, setText] = useState("");
@@ -21,7 +22,7 @@ function AddAffirmation() {
         }
       );
 
-      alert("Affirmation Added");
+      toast.success("Affirmation added 🌱");
       navigate("/affirmation");
     } catch (error) {
       console.log(error);

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api/api";
+import toast from "react-hot-toast";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -18,12 +19,12 @@ function Login() {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userName", res.data.user.name); 
 
-      alert("Login successful");
+      toast.success("Login successful ✅");
 
       
       navigate("/mood");
     } catch (error) {
-      alert(error.response?.data?.message || "Login failed");
+      toast.error("Invalid credentials ❌");
     }
   };
 

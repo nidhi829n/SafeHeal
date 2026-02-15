@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api/api";
+import toast from "react-hot-toast";
 
 function Signup() {
   const [name, setName] = useState("");
@@ -16,10 +17,10 @@ function Signup() {
         password,
       });
 
-      alert("Account created successfully");
+      toast.success("Account created successfully ✅");
       navigate("/");
     } catch (error) {
-      alert(error.response?.data?.message || "Signup failed");
+      toast.error("Signup failed ❌");
     }
   };
 

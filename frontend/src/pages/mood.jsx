@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Mood() {
   const [selectedMood, setSelectedMood] = useState("");
@@ -28,11 +29,11 @@ function Mood() {
         }
       );
 
-      alert("Mood saved!");
+      toast.success("Mood saved ");
       navigate("/home"); 
     } catch (error) {
       console.log(error);
-      alert("Error saving mood");
+      toast.error("Error saving mood");
     }
   };
 
