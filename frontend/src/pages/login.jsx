@@ -2,6 +2,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api/api";
 import toast from "react-hot-toast";
+import { GoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -28,6 +31,23 @@ function Login() {
     }
   };
 
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const res = await axios.post(
+        "https://safeheal-backend.onrender.com/api/auth/google",
+        { credential: credentialResponse.credential }
+      );
+
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userName", res.data.user?.name || "User");
+
+      toast.success("Logged in with Google 🎉");
+      navigate("/mood");
+    } catch (error) {
+      toast.error("Google login failed ❌");
+    }
+  };
+
   return (
     <div className="auth-container">
       <div className="auth-card">
@@ -48,7 +68,18 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button onClick={handleLogin}>Login</button>
+         <button className="primary-btn" onClick={handleLogin}>
+          Login
+        </button>
+
+        <div className="divider">OR</div>
+
+        <div className="google-btn">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => toast.error("Google Login Failed ❌")}
+          />
+        </div>
 
         <div className="link-text">
           Don’t have an account? <Link to="/signup">Sign up</Link>

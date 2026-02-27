@@ -10,9 +10,11 @@ import Affirmation from "./pages/affirmation";
 import AddAffirmation from "./pages/addaffirmation";
 import Meditation from "./pages/meditation";
 import Luma from "./pages/luma";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
   return (
+    <GoogleOAuthProvider clientId="315092780110-6nlmm560vqbej5keaq8tpusji6cdc6m7.apps.googleusercontent.com">
     <BrowserRouter>
       {}
       <Toaster position="top-right" reverseOrder={false} />
@@ -54,6 +56,7 @@ function App() {
         />
       </Routes>
     </BrowserRouter>
+    </GoogleOAuthProvider>
   );
 }
 
