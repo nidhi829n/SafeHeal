@@ -8,19 +8,19 @@ function Home() {
 
   return (
     <div className="home-container">
-      {/* Header */}
+      {}
       <div className="home-header">
         <h2>Hello, {userName} 🤍</h2>
         <p>"You are stronger than you think, even on the quiet days 🌿"</p>
       </div>
 
-      {/* Main Card */}
+      {}
       <div className="home-main-card">
         <h3>What would help you right now?</h3>
         <p>Choose what feels right for you today. There's no pressure.</p>
       </div>
 
-      {/* Feature Cards */}
+      {}
       <div className="home-grid">
         <div className="home-card" onClick={() => navigate("/calendar")}>
           <h4>📅 Mood Calendar</h4>

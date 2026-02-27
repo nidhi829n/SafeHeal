@@ -82,15 +82,15 @@ exports.googleLogin = async (req, res) => {
 
     const payload = ticket.getPayload();
 
-    const { email, name } = payload;
+    const { name, email, picture } = payload;
 
     let user = await User.findOne({ email });
 
     if (!user) {
       user = await User.create({
-        name,
+        name,      
         email,
-        password: "google-login",
+        password: "google-oauth",
       });
     }
 
@@ -100,16 +100,16 @@ exports.googleLogin = async (req, res) => {
       { expiresIn: "3d" }
     );
 
-    res.json({ token ,
-        user: {
-    id: user._id,
-    name: user.name,
-    email: user.email
-  }
-
+    res.json({
+      token,
+      user: {
+        name: user.name,
+        email: user.email,
+      },
     });
 
   } catch (error) {
+    console.error("Google Login Error:", error);
     res.status(500).json({ message: "Google login failed" });
   }
 };
