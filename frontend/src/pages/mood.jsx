@@ -27,7 +27,7 @@ function Mood() {
 
     try {
       await axios.post(
-        "https://safeheal-backend.onrender.com/api/mood",
+        "https://safeheal-backend.onrender.com/api/moods",
         {
           mood: selectedMood,
           note: "",

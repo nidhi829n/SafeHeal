@@ -8,57 +8,83 @@ function MoodCalendar() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [moods, setMoods] = useState({});
 
-  const year = currentMonth.getFullYear();
-  const month = currentMonth.getMonth() + 1;
+  const token = localStorage.getItem("token");
 
-  const daysInMonth = new Date(year, month, 0).getDate();
+  useEffect(() => {
+    fetchMoods();
+  }, []);
+
+  const fetchMoods = async () => {
+    try {
+      const res = await axios.get(
+        "https://safeheal-backend.onrender.com/api/moods",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Convert array to date-based object
+      const moodMap = {};
+      res.data.forEach((item) => {
+        const date = new Date(item.date)
+          .toISOString()
+          .split("T")[0];
+        moodMap[date] = getEmoji(item.mood);
+      });
+
+      setMoods(moodMap);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getEmoji = (mood) => {
+    switch (mood) {
+      case "Happy":
+        return "😊";
+      case "Sad":
+        return "😢";
+      case "Angry":
+        return "😡";
+      case "Anxious":
+        return "😰";
+      case "Stressed":
+        return "😣";
+      case "Okay":
+        return "🙂";
+      default:
+        return "";
+    }
+  };
+
+  const daysInMonth = new Date(
+    currentMonth.getFullYear(),
+    currentMonth.getMonth() + 1,
+    0
+  ).getDate();
 
   const monthName = currentMonth.toLocaleString("default", {
     month: "long",
   });
 
-  // 🔥 Fetch moods from backend
-  useEffect(() => {
-    const fetchMoods = async () => {
-      const token = localStorage.getItem("token");
-
-      try {
-        const res = await axios.get(
-          "https://safeheal-backend.onrender.com/api/mood",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        const moodMap = {};
-
-        res.data.forEach((item) => {
-          moodMap[item.date] = item.mood;
-        });
-
-        setMoods(moodMap);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchMoods();
-  }, [currentMonth]);
+  const year = currentMonth.getFullYear();
 
   return (
     <div className="calendar-page">
       <div className="calendar-header">
         <h1>📅 Mood Calendar</h1>
-        <p>Your emotional journey 🌿</p>
+        <p>A gentle snapshot of your emotions 🌿</p>
       </div>
 
       <div className="calendar-container">
         <div className="month-nav">
           <button
             onClick={() =>
-              setCurrentMonth(new Date(year, month - 2))
+              setCurrentMonth(
+                new Date(year, currentMonth.getMonth() - 1)
+              )
             }
           >
             ◀
@@ -70,7 +96,9 @@ function MoodCalendar() {
 
           <button
             onClick={() =>
-              setCurrentMonth(new Date(year, month))
+              setCurrentMonth(
+                new Date(year, currentMonth.getMonth() + 1)
+              )
             }
           >
             ▶
@@ -81,10 +109,9 @@ function MoodCalendar() {
           {Array.from({ length: daysInMonth }).map((_, index) => {
             const day = index + 1;
 
-            const dateKey = `${year}-${String(month).padStart(
-              2,
-              "0"
-            )}-${String(day).padStart(2, "0")}`;
+            const dateKey = `${year}-${String(
+              currentMonth.getMonth() + 1
+            ).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 
             return (
               <div key={day} className="day-card">
