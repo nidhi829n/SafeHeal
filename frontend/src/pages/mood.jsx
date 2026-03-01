@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./mood.css";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 function Mood() {
   const navigate = useNavigate();
   const [selectedMood, setSelectedMood] = useState(null);
-
-  const handleContinue = () => {
-    if (!selectedMood) return;
-    navigate("/home");
-  };
+  const [loading, setLoading] = useState(false);
 
   const moods = [
     { emoji: "😊", label: "Happy" },
@@ -19,6 +17,38 @@ function Mood() {
     { emoji: "😰", label: "Anxious" },
     { emoji: "😣", label: "Stressed" },
   ];
+
+  const handleContinue = async () => {
+    if (!selectedMood) return;
+
+    setLoading(true);
+
+    const token = localStorage.getItem("token");
+
+    try {
+      await axios.post(
+        "https://safeheal-backend.onrender.com/api/mood",
+        {
+          mood: selectedMood,
+          note: "",
+          date: new Date().toISOString().split("T")[0], 
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      toast.success("Mood saved 🌿");
+      navigate("/home");
+    } catch (error) {
+      console.log(error);
+      toast.error("Could not save mood");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="mood-wrapper">
@@ -43,10 +73,10 @@ function Mood() {
 
         <button
           className="continue-btn"
-          disabled={!selectedMood}
+          disabled={!selectedMood || loading}
           onClick={handleContinue}
         >
-          Continue →
+          {loading ? "Saving..." : "Continue →"}
         </button>
       </div>
     </div>

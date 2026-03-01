@@ -1,22 +1,35 @@
 const Mood = require("../models/mood");
 
-exports.addMood = async (req, res) =>{
-    try{
-        const {mood, note} = req.body;
+exports.addMood = async (req, res) => {
+  try {
+    const { mood, note, date } = req.body;
 
-        const newMood = new Mood({
-            userId: req.user.id,
-            mood: mood,
-            note: note
-        });
+    // Update if mood already exists for that date
+    const existingMood = await Mood.findOne({
+      userId: req.user.id,
+      date,
+    });
 
-        await newMood.save();
-
-        res.status(201).json({message: "Mood saves successfully"});
-
-    }catch(error){
-        res.status(500).json({message: error.message});
+    if (existingMood) {
+      existingMood.mood = mood;
+      existingMood.note = note;
+      await existingMood.save();
+      return res.json({ message: "Mood updated successfully" });
     }
+
+    const newMood = new Mood({
+      userId: req.user.id,
+      mood,
+      note,
+      date,
+    });
+
+    await newMood.save();
+
+    res.status(201).json({ message: "Mood saved successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 exports.getMoods = async (req, res) =>{

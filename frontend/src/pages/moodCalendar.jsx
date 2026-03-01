@@ -1,52 +1,64 @@
 import "./moodCalendar.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function MoodCalendar() {
   const navigate = useNavigate();
-
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [moods, setMoods] = useState({});
 
-  const moods = {
-    "2026-03-01": "😊",
-    "2026-03-05": "😢",
-    "2026-03-12": "😡",
-  };
+  const year = currentMonth.getFullYear();
+  const month = currentMonth.getMonth() + 1;
 
-  const daysInMonth = new Date(
-    currentMonth.getFullYear(),
-    currentMonth.getMonth() + 1,
-    0
-  ).getDate();
+  const daysInMonth = new Date(year, month, 0).getDate();
 
   const monthName = currentMonth.toLocaleString("default", {
     month: "long",
   });
 
-  const year = currentMonth.getFullYear();
+  // 🔥 Fetch moods from backend
+  useEffect(() => {
+    const fetchMoods = async () => {
+      const token = localStorage.getItem("token");
+
+      try {
+        const res = await axios.get(
+          "https://safeheal-backend.onrender.com/api/mood",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const moodMap = {};
+
+        res.data.forEach((item) => {
+          moodMap[item.date] = item.mood;
+        });
+
+        setMoods(moodMap);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchMoods();
+  }, [currentMonth]);
 
   return (
     <div className="calendar-page">
       <div className="calendar-header">
         <h1>📅 Mood Calendar</h1>
-        <p>A gentle snapshot of your emotions 🌿</p>
+        <p>Your emotional journey 🌿</p>
       </div>
 
-      {/* Stats Section */}
-      <div className="mood-stats">
-        <div className="stat-card">😊 5 Happy</div>
-        <div className="stat-card">😢 2 Sad</div>
-        <div className="stat-card">😡 1 Angry</div>
-      </div>
-
-      {/* Calendar Box */}
       <div className="calendar-container">
         <div className="month-nav">
           <button
             onClick={() =>
-              setCurrentMonth(
-                new Date(year, currentMonth.getMonth() - 1)
-              )
+              setCurrentMonth(new Date(year, month - 2))
             }
           >
             ◀
@@ -58,9 +70,7 @@ function MoodCalendar() {
 
           <button
             onClick={() =>
-              setCurrentMonth(
-                new Date(year, currentMonth.getMonth() + 1)
-              )
+              setCurrentMonth(new Date(year, month))
             }
           >
             ▶
@@ -70,9 +80,11 @@ function MoodCalendar() {
         <div className="calendar-grid">
           {Array.from({ length: daysInMonth }).map((_, index) => {
             const day = index + 1;
-            const dateKey = `${year}-${String(
-              currentMonth.getMonth() + 1
-            ).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+            const dateKey = `${year}-${String(month).padStart(
+              2,
+              "0"
+            )}-${String(day).padStart(2, "0")}`;
 
             return (
               <div key={day} className="day-card">
