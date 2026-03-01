@@ -1,63 +1,56 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import "./mood.css";
 
 function Mood() {
-  const [selectedMood, setSelectedMood] = useState("");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const [selectedMood, setSelectedMood] = useState(null);
 
-  const moods = [
-    { label: "Happy", emoji: "😊" },
-    { label: "Okay", emoji: "🙂" },
-    { label: "Sad", emoji: "😢" },
-    { label: "Angry", emoji: "😡" },
-    { label: "Anxious", emoji: "😰" },
-    { label: "Stressed", emoji: "😫" },
-  ];
-
-  const saveMood = async (mood) => {
-    setSelectedMood(mood);
-    try {
-      const token = localStorage.getItem("token");
-
-      await axios.post(
-        "https://safeheal-backend.onrender.com/api/moods",
-        { mood },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      toast.success("Mood saved ");
-      navigate("/home"); 
-    } catch (error) {
-      console.log(error);
-      toast.error("Error saving mood");
-    }
+  const handleContinue = () => {
+    if (!selectedMood) return;
+    navigate("/home");
   };
 
-  return (
-    <div className="mood-container">
-      <h2>Hi 👋</h2>
-      <p>How are you feeling today?</p>
+  const moods = [
+    { emoji: "😊", label: "Happy" },
+    { emoji: "🙂", label: "Okay" },
+    { emoji: "😢", label: "Sad" },
+    { emoji: "😡", label: "Angry" },
+    { emoji: "😰", label: "Anxious" },
+    { emoji: "😣", label: "Stressed" },
+  ];
 
-      <div className="mood-grid">
-        {moods.map((m) => (
-          <button
-            key={m.label}
-            className={`mood-btn ${selectedMood === m.label ? "active" : ""}`}
-            onClick={() => saveMood(m.label)}
-          >
-            <div style={{ fontSize: "30px" }}>{m.emoji}</div>
-            <div>{m.label}</div>
-          </button>
-        ))}
+  return (
+    <div className="mood-wrapper">
+      <div className="mood-card">
+        <h2>Hi 👋</h2>
+        <p>How are you feeling today?</p>
+
+        <div className="mood-grid">
+          {moods.map((mood) => (
+            <div
+              key={mood.label}
+              className={`mood-item ${
+                selectedMood === mood.label ? "selected" : ""
+              }`}
+              onClick={() => setSelectedMood(mood.label)}
+            >
+              <span>{mood.emoji}</span>
+              <p>{mood.label}</p>
+            </div>
+          ))}
+        </div>
+
+        <button
+          className="continue-btn"
+          disabled={!selectedMood}
+          onClick={handleContinue}
+        >
+          Continue →
+        </button>
       </div>
     </div>
   );
 }
 
 export default Mood;
-
-

@@ -1,48 +1,108 @@
-.home-container {
+.home-wrapper {
   min-height: 100vh;
-  background-color: #0f4d2f;
-  padding: 30px;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.floating-bg::before,
+.floating-bg::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.5;
+  animation: float 10s infinite alternate ease-in-out;
+}
+
+.floating-bg::before {
+  width: 400px;
+  height: 400px;
+  background: #00c9a7;
+  top: -100px;
+  left: -100px;
+}
+
+.floating-bg::after {
+  width: 500px;
+  height: 500px;
+  background: #845ec2;
+  bottom: -150px;
+  right: -150px;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(40px);
+  }
+}
+
+.home-content {
+  width: 85%;
+  max-width: 1200px;
+  padding: 80px 0;
+  z-index: 2;
   color: white;
-  font-family: Arial, sans-serif;
 }
 
-.home-header h2 {
-  margin-bottom: 5px;
+.hero {
+  text-align: center;
+  margin-bottom: 60px;
 }
 
-.home-header p {
-  font-style: italic;
-  opacity: 0.9;
+.hero h1 {
+  font-size: 40px;
+  font-weight: 700;
 }
 
-.home-main-card {
-  background: white;
-  color: black;
-  padding: 20px;
-  border-radius: 12px;
-  margin: 20px 0;
+.hero p {
+  opacity: 0.8;
+  margin-top: 10px;
+  font-size: 16px;
 }
 
-.home-grid {
+.feature-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
+  gap: 30px;
 }
 
-.home-card {
-  background: white;
-  color: black;
-  padding: 15px;
-  border-radius: 12px;
+.feature-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  padding: 35px;
+  border-radius: 20px;
+  transition: 0.3s ease;
   cursor: pointer;
-  transition: 0.2s;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
 }
 
-.home-card:hover {
-  transform: scale(1.03);
+.feature-card:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.15);
 }
 
-.home-card span {
-  color: green;
-  font-weight: bold;
+.feature-card .icon {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.feature-card h3 {
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  opacity: 0.8;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.feature-card span {
+  font-weight: 600;
+  color: #4fd1c5;
 }

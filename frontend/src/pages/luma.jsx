@@ -10,7 +10,7 @@ function Luma() {
   const navigate = useNavigate();
 
   const sendMessage = async () => {
-    if (!input) return;
+    if (!input.trim()) return;
 
     const token = localStorage.getItem("token");
 
@@ -28,43 +28,55 @@ function Luma() {
         }
       );
 
-      const botMsg = { sender: "bot", text: res.data.reply };
+      const botMsg = { sender: "ai", text: res.data.reply };
       setMessages((prev) => [...prev, botMsg]);
       setInput("");
     } catch (err) {
-      console.log(err);
       toast.error("Luma is having trouble responding");
     }
   };
 
   return (
-    <div className="luma-container">
-      <h2>💬 Luma – Your AI Companion</h2>
+    <div className="luma-wrapper">
 
-      <div className="chat-box">
+      <div className="luma-header">
+        💬 Luma – Your AI Companion
+      </div>
+
+      <div className="luma-chat">
+        {messages.length === 0 && (
+          <div className="message ai">
+            Hi 💚 I'm Luma. Tell me how you're feeling today.
+          </div>
+        )}
+
         {messages.map((m, i) => (
-          <div key={i} className={m.sender}>
+          <div key={i} className={`message ${m.sender}`}>
             {m.text}
           </div>
         ))}
       </div>
 
-      <div className="chat-input">
+      <div className="luma-input-section">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type how you feel..."
+          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
         />
         <button onClick={sendMessage}>Send</button>
       </div>
 
-      <p className="back" onClick={() => navigate("/home")}>
+      <div
+        className="back-link"
+        onClick={() => navigate("/home")}
+      >
         ← Back to Home
-      </p>
+      </div>
+
     </div>
   );
 }
 
 export default Luma;
-
 

@@ -1,69 +1,12 @@
+
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(
-    -45deg,
-    #177e4e,
-    #153224,
-    #029e6f,
-    #0f766e
-  );
-  background-size: 400% 400%;
-  animation: gradientBG 12s ease infinite;
-  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
 }
 
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
 
-.auth-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  
-}
 
-.auth-card {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  width: 320px;
-  text-align: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-
-.auth-card h2 {
-  margin-bottom: 10px;
-  color: #0f5132;
-}
-
-.auth-card input {
-  width: 90%;
-  padding: 10px;
-  margin: 10px 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.auth-card button {
-  width: 100%;
-  padding: 10px;
-  background-color: #0f5132;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.auth-card button:hover {
-  background-color: #0b3d27;
-}
-
-.link-text {
+/* .link-text {
   margin-top: 10px;
 }
 .link-text a {
@@ -103,4 +46,4 @@ body {
 .mood-btn.active {
   background-color: #2f855a;
   color: white;
-}
+} */

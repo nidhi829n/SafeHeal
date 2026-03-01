@@ -1,16 +1,18 @@
 .meditation-bg {
-  height: 100vh;
-  background-image: url("https://images.unsplash.com/photo-1501785888041-af3ef285b470");
-  background-size: cover;
-  background-position: center;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
+  background-image: url("/meditation.png");
+  background-size: cover;  
+  background-position: center 20%;  
+  background-repeat: no-repeat;
 }
 
 .meditation-box {
   background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
   padding: 50px;
   border-radius: 18px;
   width: 360px;

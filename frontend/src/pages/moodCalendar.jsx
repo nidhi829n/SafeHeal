@@ -1,92 +1,99 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import "./moodCalendar.css";
-
-const moodEmoji = {
-  Happy: "😊",
-  Okay: "🙂",
-  Sad: "😢",
-  Angry: "😡",
-  Anxious: "😰",
-  Stressed: "😫",
-};
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function MoodCalendar() {
-  const [moods, setMoods] = useState([]);
-  const [currentDate, setCurrentDate] = useState(new Date());
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchMoods = async () => {
-      const token = localStorage.getItem("token");
-      const res = await axios.get("https://safeheal-backend.onrender.com/api/moods", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setMoods(res.data);
-    };
-    fetchMoods();
-  }, []);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
-
-  const firstDay = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-  const getMoodForDay = (day) => {
-    const found = moods.find((m) => {
-      const d = new Date(m.date);
-      return (
-        d.getDate() === day &&
-        d.getMonth() === month &&
-        d.getFullYear() === year
-      );
-    });
-    return found ? moodEmoji[found.mood] : "";
+  const moods = {
+    "2026-03-01": "😊",
+    "2026-03-05": "😢",
+    "2026-03-12": "😡",
   };
+
+  const daysInMonth = new Date(
+    currentMonth.getFullYear(),
+    currentMonth.getMonth() + 1,
+    0
+  ).getDate();
+
+  const monthName = currentMonth.toLocaleString("default", {
+    month: "long",
+  });
+
+  const year = currentMonth.getFullYear();
 
   return (
     <div className="calendar-page">
-      <h2 className="title">📅 Mood Calendar</h2>
-      <p className="subtitle">A gentle snapshot of your emotions 🌿</p>
+      <div className="calendar-header">
+        <h1>📅 Mood Calendar</h1>
+        <p>A gentle snapshot of your emotions 🌿</p>
+      </div>
 
-      {/* ✅ CARD ONLY */}
-      <div className="calendar-card">
+      {/* Stats Section */}
+      <div className="mood-stats">
+        <div className="stat-card">😊 5 Happy</div>
+        <div className="stat-card">😢 2 Sad</div>
+        <div className="stat-card">😡 1 Angry</div>
+      </div>
 
-        <div className="month-header">
-          <button onClick={() => setCurrentDate(new Date(year, month - 1))}>◀</button>
-          <h3>
-            {currentDate.toLocaleString("default", { month: "long" })} {year}
-          </h3>
-          <button onClick={() => setCurrentDate(new Date(year, month + 1))}>▶</button>
+      {/* Calendar Box */}
+      <div className="calendar-container">
+        <div className="month-nav">
+          <button
+            onClick={() =>
+              setCurrentMonth(
+                new Date(year, currentMonth.getMonth() - 1)
+              )
+            }
+          >
+            ◀
+          </button>
+
+          <h2>
+            {monthName} {year}
+          </h2>
+
+          <button
+            onClick={() =>
+              setCurrentMonth(
+                new Date(year, currentMonth.getMonth() + 1)
+              )
+            }
+          >
+            ▶
+          </button>
         </div>
 
         <div className="calendar-grid">
-          {["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(d => (
-            <div key={d} className="day-name">{d}</div>
-          ))}
+          {Array.from({ length: daysInMonth }).map((_, index) => {
+            const day = index + 1;
+            const dateKey = `${year}-${String(
+              currentMonth.getMonth() + 1
+            ).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 
-          {Array(firstDay).fill(null).map((_,i)=><div key={i}></div>)}
-
-          {Array(daysInMonth).fill(null).map((_, i) => (
-            <div key={i} className="calendar-day">
-              <span>{i + 1}</span>
-              <div className="emoji">{getMoodForDay(i + 1)}</div>
-            </div>
-          ))}
+            return (
+              <div key={day} className="day-card">
+                <span className="day-number">{day}</span>
+                <span className="day-emoji">
+                  {moods[dateKey] || ""}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      <span className="back" onClick={() => navigate("/home")}>
+      <button
+        className="back-btn"
+        onClick={() => navigate("/home")}
+      >
         ← Back to Home
-      </span>
+      </button>
     </div>
   );
 }
 
 export default MoodCalendar;
-
-
-
-
