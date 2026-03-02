@@ -8,7 +8,8 @@ The platform uses AI (Gemini API) to provide intelligent responses and promotes 
 
 ## 🚀 Features
 
-- 🔐 User Authentication (Login & Signup)  
+- 🔐 User Authentication (Login & Signup)
+- 🔑 OAuth Login (Google Sign-In Integration) 
 - 📅 Mood Tracking System  
 - 💬 Emotion-based AI interaction  
 - 🤖 AI-powered responses using Gemini API  
@@ -34,9 +35,4 @@ The platform uses AI (Gemini API) to provide intelligent responses and promotes 
 
 ---
 
-## 📽️ Demo Video
-
-Click below to watch the demo video of SafeHeal:
-
-[▶️ Watch Demo Video](https://youtu.be/TiwPF-RJu3E)
 
